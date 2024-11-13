@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
 
 pulseheight_sodium = np.array([80, 188, 112.5])  # in mV
+pulseheight_cesium = np.array([])
 energy = np.array([0.511, 1.274, 0.662])  # in eV
 
 def linear_function(P, m, b):
