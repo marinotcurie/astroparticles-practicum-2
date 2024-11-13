@@ -1,16 +1,40 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
+import csv
+import pandas as pd
 
 pulseheight_sodium = np.array([80, 188, 112.5])  # in mV
-pulseheight_cesium = np.array([])
 energy = np.array([0.511, 1.274, 0.662])  # in eV
 
-def linear_function(P, m, b):
+
+def linear_function(P, m, b): #function for calibration
     return m * P + b
 
+def gauss_function(x, amp, cen, width):
+    return amp * np.exp(-(x - cen))**2 / (2 * width**2)
+
+def fwhm(x, y):
+    p0 = [max(y), x[np.argmax(y)], 1.0]
+    coeff, _ = curve_fit(gauss_function, x, y, p0=p0)
+    return 2 * np.sqrt(2 * np.log(2)) * coeff[2]
 
 params, covariance = curve_fit(linear_function, pulseheight_sodium, energy)
+
+df = pd.read_csv('spectrum_cesium137_1.csv', sep=';')
+
+pulseheight_cesium_list = []
+counts_cesium = []
+
+for col in df:
+    pulseheight_cesium_list.append(col[0])
+    counts_cesium.append(col[1])
+
+print(pulseheight_cesium_list, counts_cesium)
+
+
+# fwhm_value = fwhm(pulseheight_cesium, counts_cesium)
+
 
 m_fit, b_fit = params
 print(f"slope: {m_fit:.5f} eV/mV")
