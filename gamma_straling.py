@@ -4,8 +4,8 @@ from scipy.optimize import curve_fit
 import csv
 import pandas as pd
 
-pulseheight_sodium = np.array([80, 188])  # in mV
-energy = np.array([0.511, 1.274])  # in eV
+pulseheight_sodium = np.array([1691.02943, 4049.5588235])  # in mV
+energy = np.array([511, 1274])  # in eV
 
 
 def linear_function(P, m, b): #function for calibration
