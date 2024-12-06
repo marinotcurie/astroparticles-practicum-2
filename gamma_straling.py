@@ -4,7 +4,7 @@ from scipy.optimize import curve_fit
 import csv
 import pandas as pd
 
-pulseheight_sodium = np.array([1691.02943, 4049.5588235])  # in mV
+pulseheight = np.array([1691.02943, 4049.5588235])  # in mV
 energy = np.array([511, 1274])  # in eV
 
 
@@ -19,7 +19,7 @@ def fwhm(x, y):
     coeff, _ = curve_fit(gauss_function, x, y, p0=p0)
     return 2 * np.sqrt(2 * np.log(2)) * coeff[2]
 
-params, covariance = curve_fit(linear_function, pulseheight_sodium, energy)
+params, covariance = curve_fit(linear_function, pulseheight, energy)
 
 df = pd.read_csv('spectrum_cesium137_1.csv', sep=';')
 
@@ -44,8 +44,8 @@ def fit_function(P):
     return m_fit * P + b_fit
 
 
-plt.scatter(pulseheight_sodium, energy, color='red', label='Data')
-plt.plot(pulseheight_sodium, fit_function(pulseheight_sodium), color='blue')
+plt.scatter(pulseheight, energy, color='red', label='Data')
+plt.plot(pulseheight, fit_function(pulseheight), color='blue')
 plt.xlabel('pulseheight (mV)')
 plt.ylabel('energy (eV)')
 plt.legend()
