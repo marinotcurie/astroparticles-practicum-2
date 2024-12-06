@@ -4,14 +4,10 @@ from scipy.optimize import curve_fit
 import csv
 import pandas as pd
 
-<<<<<<< HEAD
 pulseheight = np.array([1691.02943, 4049.5588235, 2186.02948])  # in mV
 energy = np.array([511, 1274, 662])  # in keV
 energy_error = np.array([19.2] * len(energy)) #foutmarge van halve bin
-=======
-pulseheight = np.array([1691.02943, 4049.5588235])  # in mV
-energy = np.array([511, 1274])  # in eV
->>>>>>> 7c3b4e18952bd8215aa3ef291bb97fd024819934
+
 
 
 
@@ -56,7 +52,7 @@ chi_squared = np.sum((residuals / energy_error) ** 2)
 print(f"Chi-squared value: {chi_squared:.5f}")
 
 
-<<<<<<< HEAD
+
 param_errors = np.sqrt(np.diagonal(covariance))
 print(f"Error on a: {param_errors[0]:.5f}")
 print(f"Error on b: {param_errors[1]:.5f}")
@@ -86,14 +82,14 @@ ax2.set_ylabel('Residu (keV)')
 ax2.set_title('Residual plot')
 
 plt.tight_layout()
-=======
+
 plt.scatter(pulseheight, energy, color='red', label='Data')
 plt.plot(pulseheight, fit_function(pulseheight), color='blue')
 plt.xlabel('pulseheight (mV)')
 plt.ylabel('energy (eV)')
 plt.legend()
 plt.title('Lineair fit between pulseheight and energy')
->>>>>>> 7c3b4e18952bd8215aa3ef291bb97fd024819934
+
 plt.show()
 
 
