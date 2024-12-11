@@ -9,8 +9,6 @@ energy = np.array([511, 1274, 662])  # in keV
 energy_error = np.array([19.2] * len(energy)) #foutmarge van halve bin
 
 
-
-
 def linear_function(P, a, b): #function for calibration
     return a * P + b
 
@@ -36,7 +34,7 @@ for col in df:
 print(pulseheight_cesium_list, counts_cesium)
 
 
-# fwhm_value = fwhm(pulseheight_cesium, counts_cesium)
+    # fwhm_value = fwhm(pulseheight_cesium, counts_cesium)
 
 
 a_fit, b_fit = params
@@ -62,34 +60,27 @@ fig, (ax1, ax2) = plt.subplots(2, 1, gridspec_kw={'height_ratios': [3, 1]}, figs
 ax1.errorbar(
     pulseheight, energy, yerr=energy_error, fmt='o', 
     color='red', label='Data (met foutmarge)', capsize=5
-)
+    )
 ax1.plot(
-    pulseheight, predicted_energy, 
-    color='blue', label='Lineaire fit'
-)
+        pulseheight, predicted_energy, 
+        color='blue', label='Lineaire fit'
+    )
 ax1.set_ylabel('Energie (keV)')
 ax1.set_title('Lineaire fit tussen pulsehoogte en energie')
 ax1.legend()
 
-# residu
+    # residu
 ax2.axhline(0, color='black', linestyle='--', linewidth=0.8)  # Lijn bij residu = 0
 ax2.errorbar(
-    pulseheight, residuals, yerr=energy_error, fmt='o', 
-    color='red', capsize=5
-)
+        pulseheight, residuals, yerr=energy_error, fmt='o', 
+        color='red', capsize=5
+    )
 ax2.set_xlabel('Pulsehoogte (mV)')
 ax2.set_ylabel('Residu (keV)')
 ax2.set_title('Residual plot')
 
+
 plt.tight_layout()
-
-plt.scatter(pulseheight, energy, color='red', label='Data')
-plt.plot(pulseheight, fit_function(pulseheight), color='blue')
-plt.xlabel('pulseheight (mV)')
-plt.ylabel('energy (eV)')
-plt.legend()
-plt.title('Lineair fit between pulseheight and energy')
-
 plt.show()
 
 
