@@ -4,7 +4,7 @@ from scipy.optimize import curve_fit
 import csv
 import pandas as pd
 
-pulseheight = np.array([1691.02943, 4049.5588235, 2186.02948])  # in mV
+pulseheight = np.array([1691.02943, 4049.5588235, 2168.48])  # in mV
 energy = np.array([511, 1274, 662])  # in keV
 energy_error = np.array([19.2] * len(energy)) #foutmarge van halve bin
 
@@ -12,29 +12,9 @@ energy_error = np.array([19.2] * len(energy)) #foutmarge van halve bin
 def linear_function(P, a, b): #function for calibration
     return a * P + b
 
-def gauss_function(x, amp, cen, width):
-    return amp * np.exp(-(x - cen))**2 / (2 * width**2)
-
-def fwhm(x, y):
-    p0 = [max(y), x[np.argmax(y)], 1.0]
-    coeff, _ = curve_fit(gauss_function, x, y, p0=p0)
-    return 2 * np.sqrt(2 * np.log(2)) * coeff[2]
 
 params, covariance = curve_fit(linear_function, pulseheight, energy)
 
-df = pd.read_csv('spectrum_cesium137_1.csv', sep=';')
-
-pulseheight_cesium_list = []
-counts_cesium = []
-
-for col in df:
-    pulseheight_cesium_list.append(col[0])
-    counts_cesium.append(col[1])
-
-print(pulseheight_cesium_list, counts_cesium)
-
-
-    # fwhm_value = fwhm(pulseheight_cesium, counts_cesium)
 
 
 a_fit, b_fit = params
