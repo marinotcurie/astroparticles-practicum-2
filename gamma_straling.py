@@ -1,8 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
-import csv
-import pandas as pd
 
 pulseheight = np.array([1691.02943, 4049.5588235, 2168.48])  # in mV
 energy = np.array([511, 1274, 662])  # in keV
@@ -14,7 +12,6 @@ def linear_function(P, a, b): #function for calibration
 
 
 params, covariance = curve_fit(linear_function, pulseheight, energy)
-
 
 
 a_fit, b_fit = params
@@ -49,8 +46,7 @@ ax1.set_ylabel('Energie (keV)')
 ax1.set_title('Lineaire fit tussen pulsehoogte en energie')
 ax1.legend()
 
-    # residu
-ax2.axhline(0, color='black', linestyle='--', linewidth=0.8)  # Lijn bij residu = 0
+ax2.axhline(0, color='black', linestyle='--', linewidth=0.8)
 ax2.errorbar(
         pulseheight, residuals, yerr=energy_error, fmt='o', 
         color='red', capsize=5
@@ -58,10 +54,9 @@ ax2.errorbar(
 ax2.set_xlabel('Pulsehoogte (mV)')
 ax2.set_ylabel('Residu (keV)')
 ax2.set_title('Residual plot')
-
-
 plt.tight_layout()
 plt.show()
+
 
 
 
